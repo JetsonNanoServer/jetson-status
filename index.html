@@ -1,79 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Jetson Nano Monitor</title>
-
+<title>Jetson Status</title>
 <style>
-body{
-font-family: Arial;
-text-align:center;
-margin-top:80px;
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 50px;
+    background: #f2f2f2;
 }
 
-.card{
-border:1px solid #ccc;
-padding:30px;
-display:inline-block;
-border-radius:10px;
+#estado {
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
-button{
-padding:12px 25px;
-font-size:16px;
-cursor:pointer;
+p {
+    font-size: 1.2em;
+}
+
+button {
+    font-size: 1em;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
 }
 </style>
-
 </head>
-
 <body>
-
-<div class="card">
 
 <h1 id="estado">Verificando Jetson...</h1>
 
 <p id="imagenes"></p>
-
 <p id="ultima"></p>
 
-<button onclick="abrir()">Abrir Galería</button>
-
-</div>
+<button onclick="abrirGaleria()">Abrir Galería</button>
 
 <script>
+const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev"; // Cambia por tu URL de Ngrok
 
-const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev"
-
-fetch(server + "/info?ngrok-skip-browser-warning=true")
-.then(res => res.json())
-.then(data => {
-
-document.getElementById("estado").innerText="🟢 Jetson Online"
-
-document.getElementById("imagenes").innerText=
-"📷 Imágenes almacenadas: " + data.imagenes
-
-document.getElementById("ultima").innerText=
-"🖼 Última imagen: " + data.ultima_imagen
-
+// Consultar status
+fetch(server + "/status")
+.then(res => res.text())
+.then(text => {
+    if(text === "OK"){
+        document.getElementById("estado").innerText = "🟢 Jetson Online";
+        // Si está online, consultar info de imágenes
+        fetch(server + "/info")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("imagenes").innerText =
+                "📷 Imágenes almacenadas: " + data.imagenes;
+            document.getElementById("ultima").innerText =
+                "🖼 Última imagen: " + data.ultima_imagen;
+        })
+        .catch(()=>{
+            document.getElementById("imagenes").innerText = "";
+            document.getElementById("ultima").innerText = "";
+        });
+    } else {
+        document.getElementById("estado").innerText = "🔴 Jetson Offline";
+        document.getElementById("imagenes").innerText = "";
+        document.getElementById("ultima").innerText = "";
+    }
 })
 .catch(()=>{
+    document.getElementById("estado").innerText = "🔴 Jetson Offline";
+    document.getElementById("imagenes").innerText = "";
+    document.getElementById("ultima").innerText = "";
+});
 
-document.getElementById("estado").innerText="🔴 Jetson Offline"
-
-document.getElementById("imagenes").innerText=""
-
-document.getElementById("ultima").innerText=""
-
-})
-
-function abrir(){
-
-window.location.href=server
-
+// Función para abrir la galería
+function abrirGaleria(){
+    window.location.href = server;
 }
-
 </script>
 
 </body>
