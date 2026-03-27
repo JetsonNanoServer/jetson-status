@@ -14,42 +14,36 @@
 const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
 const status = server + "/status?ngrok-skip-browser-warning=true";
 
-let iframe = document.createElement("iframe");
-iframe.style.display = "none";
+fetch(status)
+.then(response => response.text())
+.then(data => {
 
-let loaded = false;
-
-iframe.onload = function(){
-
-    loaded = true;
-
-    document.body.innerHTML = `
-    <h1>🟢 Servidor activo</h1>
-    <p>Redirigiendo a la galería...</p>
-    `;
-
-    setTimeout(()=>{
-        window.location.href = server;
-    },2000);
-
-};
-
-iframe.src = status;
-
-document.body.appendChild(iframe);
-
-setTimeout(()=>{
-
-    if(!loaded){
+    if(data.includes("OK")){
 
         document.body.innerHTML = `
-        <h1>🔴 Servidor offline</h1>
-        <p>La Jetson no está conectada</p>
+        <h1>🟢 Servidor activo</h1>
+        <p>Redirigiendo a la galería...</p>
         `;
+
+        setTimeout(()=>{
+            window.location.href = server;
+        },2000);
+
+    }else{
+
+        throw new Error("offline");
 
     }
 
-},3000);
+})
+.catch(()=>{
+
+    document.body.innerHTML = `
+    <h1>🔴 Servidor offline</h1>
+    <p>La Jetson no está conectada</p>
+    `;
+
+});
 
 </script>
 
