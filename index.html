@@ -2,48 +2,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Estado Jetson</title>
+<title>Jetson Server</title>
 </head>
 
 <body>
 
-<h1>Verificando servidor...</h1>
+<h1>Conectando con el servidor...</h1>
 
 <script>
 
 const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
-const status = server + "/status?ngrok-skip-browser-warning=true";
 
-fetch(status)
-.then(response => response.text())
-.then(data => {
-
-    if(data.includes("OK")){
-
-        document.body.innerHTML = `
-        <h1>🟢 Servidor activo</h1>
-        <p>Redirigiendo a la galería...</p>
-        `;
-
-        setTimeout(()=>{
-            window.location.href = server;
-        },2000);
-
-    }else{
-
-        throw new Error("offline");
-
-    }
-
-})
-.catch(()=>{
-
-    document.body.innerHTML = `
-    <h1>🔴 Servidor offline</h1>
-    <p>La Jetson no está conectada</p>
-    `;
-
-});
+setTimeout(()=>{
+    window.location.href = server;
+},1500);
 
 </script>
 
