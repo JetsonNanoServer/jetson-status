@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Conectando al servidor</title>
+
+<style>
+body{
+font-family: Arial;
+text-align:center;
+padding-top:100px;
+background:#f2f2f2;
+}
+
+.box{
+background:white;
+padding:40px;
+border-radius:10px;
+display:inline-block;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+<h1>Conectando al servidor...</h1>
+<p>Si el servidor está activo serás redirigido automáticamente.</p>
+</div>
+
+<script>
+
+const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
+
+setTimeout(() => {
+window.location.href = server;
+}, 2000);
+
+</script>
+
+</body>
+</html>
