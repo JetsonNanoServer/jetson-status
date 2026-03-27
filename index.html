@@ -1,13 +1,19 @@
+<body>
+
+<h1 id="titulo">Verificando servidor...</h1>
+<p id="mensaje">Espera un momento</p>
+
 <script>
 
 const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
 
 fetch(server + "/status")
 .then(response => {
+
     if(response.ok){
 
-        document.body.innerHTML =
-        "<h1>Servidor activo</h1><p>Redirigiendo...</p>";
+        document.getElementById("titulo").innerText = "Servidor activo";
+        document.getElementById("mensaje").innerText = "Redirigiendo...";
 
         setTimeout(()=>{
             window.location.href = server;
@@ -15,16 +21,19 @@ fetch(server + "/status")
 
     }else{
 
-        document.body.innerHTML =
-        "<h1>Servidor offline</h1><p>La Jetson no está conectada</p>";
+        document.getElementById("titulo").innerText = "Servidor offline";
+        document.getElementById("mensaje").innerText = "La Jetson no está conectada";
 
     }
-})
-.catch(error => {
 
-    document.body.innerHTML =
-    "<h1>Servidor offline</h1><p>No se pudo conectar</p>";
+})
+.catch(()=>{
+
+    document.getElementById("titulo").innerText = "Servidor offline";
+    document.getElementById("mensaje").innerText = "No se pudo conectar";
 
 });
 
 </script>
+
+</body>
