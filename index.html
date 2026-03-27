@@ -1,13 +1,21 @@
-<script>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Estado Jetson</title>
+</head>
 
-document.addEventListener("DOMContentLoaded", function(){
+<body>
+
+<h1>Verificando servidor...</h1>
+
+<script>
 
 const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
 const status = server + "/status?ngrok-skip-browser-warning=true";
 
 let iframe = document.createElement("iframe");
 iframe.style.display = "none";
-iframe.src = status;
 
 let loaded = false;
 
@@ -26,6 +34,8 @@ iframe.onload = function(){
 
 };
 
+iframe.src = status;
+
 document.body.appendChild(iframe);
 
 setTimeout(()=>{
@@ -41,6 +51,7 @@ setTimeout(()=>{
 
 },3000);
 
-});
-
 </script>
+
+</body>
+</html>
