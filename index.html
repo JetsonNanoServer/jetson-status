@@ -1,44 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Estado del Servidor</title>
-
-<style>
-body{
-font-family:Arial;
-text-align:center;
-padding-top:100px;
-background:#f2f2f2;
-}
-
-.box{
-background:white;
-padding:40px;
-border-radius:10px;
-display:inline-block;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="box">
-<h1>Verificando servidor...</h1>
-<p>Esperando respuesta de la Jetson</p>
-</div>
-
 <script>
 
 const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
 const test = server + "/status";
 
-fetch(test)
-.then(response => {
-
-if(response.ok){
+fetch(test, {mode:"no-cors"})
+.then(() => {
 
 document.querySelector("h1").innerText = "Servidor activo";
 document.querySelector("p").innerText = "Redirigiendo...";
@@ -46,12 +12,6 @@ document.querySelector("p").innerText = "Redirigiendo...";
 setTimeout(()=>{
 window.location.href = server;
 },2000);
-
-}else{
-
-throw new Error("offline");
-
-}
 
 })
 .catch(()=>{
@@ -62,6 +22,3 @@ document.querySelector("p").innerText = "La Jetson no está conectada";
 });
 
 </script>
-
-</body>
-</html>
