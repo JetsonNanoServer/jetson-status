@@ -6,7 +6,7 @@ const status = server + "/status?ngrok-skip-browser-warning=true";
 fetch(status)
 .then(response => {
 
-    if(response.ok){
+    if(response.OK){
 
         document.body.innerHTML = `
         <h1>🟢 Servidor activo</h1>
