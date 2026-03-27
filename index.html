@@ -2,20 +2,77 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Jetson Server</title>
+<title>Jetson Nano Monitor</title>
+
+<style>
+body{
+font-family: Arial;
+text-align:center;
+margin-top:80px;
+}
+
+.card{
+border:1px solid #ccc;
+padding:30px;
+display:inline-block;
+border-radius:10px;
+}
+
+button{
+padding:12px 25px;
+font-size:16px;
+cursor:pointer;
+}
+</style>
+
 </head>
 
 <body>
 
-<h1>Conectando con el servidor...</h1>
+<div class="card">
+
+<h1 id="estado">Verificando Jetson...</h1>
+
+<p id="imagenes"></p>
+
+<p id="ultima"></p>
+
+<button onclick="abrir()">Abrir Galería</button>
+
+</div>
 
 <script>
 
-const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
+const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev"
 
-setTimeout(()=>{
-    window.location.href = server;
-},1500);
+fetch(server + "/info?ngrok-skip-browser-warning=true")
+.then(res => res.json())
+.then(data => {
+
+document.getElementById("estado").innerText="🟢 Jetson Online"
+
+document.getElementById("imagenes").innerText=
+"📷 Imágenes almacenadas: " + data.imagenes
+
+document.getElementById("ultima").innerText=
+"🖼 Última imagen: " + data.ultima_imagen
+
+})
+.catch(()=>{
+
+document.getElementById("estado").innerText="🔴 Jetson Offline"
+
+document.getElementById("imagenes").innerText=""
+
+document.getElementById("ultima").innerText=""
+
+})
+
+function abrir(){
+
+window.location.href=server
+
+}
 
 </script>
 
