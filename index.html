@@ -1,31 +1,36 @@
 <script>
 
 const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
+const status = server + "/status?ngrok-skip-browser-warning=true";
 
-let img = new Image();
+fetch(status)
+.then(response => {
 
-img.onload = function(){
+    if(response.ok){
 
-    document.body.innerHTML = `
-    <h1>🟢 Servidor activo</h1>
-    <p>Redirigiendo a la galería...</p>
-    `;
+        document.body.innerHTML = `
+        <h1>🟢 Servidor activo</h1>
+        <p>Redirigiendo a la galería...</p>
+        `;
 
-    setTimeout(()=>{
-        window.location.href = server;
-    },2000);
+        setTimeout(()=>{
+            window.location.href = server;
+        },2000);
 
-};
+    }else{
 
-img.onerror = function(){
+        throw new Error("offline");
+
+    }
+
+})
+.catch(()=>{
 
     document.body.innerHTML = `
     <h1>🔴 Servidor offline</h1>
     <p>La Jetson no está conectada</p>
     `;
 
-};
-
-img.src = server + "/status";
+});
 
 </script>
