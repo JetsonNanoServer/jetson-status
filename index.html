@@ -1,23 +1,29 @@
 <script>
 
 const server = "https://inwrought-uninquisitorially-orpha.ngrok-free.dev";
-const test = server + "/status";
 
-fetch(test, {mode:"no-cors"})
-.then(() => {
+fetch(server + "/status")
+.then(response => {
+    if(response.ok){
 
-document.querySelector("h1").innerText = "Servidor activo";
-document.querySelector("p").innerText = "Redirigiendo...";
+        document.body.innerHTML =
+        "<h1>Servidor activo</h1><p>Redirigiendo...</p>";
 
-setTimeout(()=>{
-window.location.href = server;
-},2000);
+        setTimeout(()=>{
+            window.location.href = server;
+        },2000);
 
+    }else{
+
+        document.body.innerHTML =
+        "<h1>Servidor offline</h1><p>La Jetson no está conectada</p>";
+
+    }
 })
-.catch(()=>{
+.catch(error => {
 
-document.querySelector("h1").innerText = "Servidor offline";
-document.querySelector("p").innerText = "La Jetson no está conectada";
+    document.body.innerHTML =
+    "<h1>Servidor offline</h1><p>No se pudo conectar</p>";
 
 });
 
